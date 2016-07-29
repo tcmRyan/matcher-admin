@@ -1,1 +1,1 @@
-web: gunicorn matcherAdmin:app
+web: gunicorn app:app

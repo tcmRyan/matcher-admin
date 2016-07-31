@@ -8,7 +8,7 @@ class Config(object):
     """
     DEBUG = False
     CSRF_ENABLED = True
-    SECRET_KEY = os.environ['SECRECT_KEY']
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 class ProductionConfig(Config):
     DEBUG = False

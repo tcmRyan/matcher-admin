@@ -7,11 +7,6 @@ from flask_security import login_required
 from matcherAdmin import app, user_datastore
 
 
-@app.before_first_request
-def create_user():
-    user_datastore.create_user(email='ryan', password= 'changeme')
-
-
 @app.route('/')
 @app.route('/home')
 @login_required

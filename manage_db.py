@@ -1,19 +1,19 @@
+"""
+Script to instantiate the tools to run alemic migrations
+"""
 import os
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
 from matcherAdmin import app, db
 
-"""
-Script to instantiate the tools to run alemic migrations
-"""
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 
-migrate = Migrate(app, db)
-manager = Manager(app)
+MIGRATE = Migrate(app, db)
+MANAGER = Manager(app)
 
-manager.add_command('db', MigrateCommand)
+MANAGER.add_command('db', MigrateCommand)
 
 if __name__ == '__main__':
-    manager.run()
+    MANAGER.run()

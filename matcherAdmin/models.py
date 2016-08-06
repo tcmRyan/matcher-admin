@@ -1,40 +1,43 @@
-from datetime import datetime
+"""
+Postgres models for the matcherAdmin application
+"""
+
+
 from matcherAdmin import db
-from sqlalchemy.dialects.postgresql import JSON
+from flask_security import UserMixin, RoleMixin
 
 
-class User(db.Model):
-    """Authorized Users For the Word matcher 
+roles_users = db.Table('roles_users',
+                       db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+                       db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+
+
+class Role(db.Model, RoleMixin):
+    """
+    Roles for authorization
+    """
+    id = db.Column(db.Integer(), primary_key=True, unique=True)
+    name = db.Column(db.String(80), unique=True)
+    description = db.Column(db.String(255))
+
+    def __str__(self):
+        return self.name
+ 
+
+class User(db.Model, UserMixin):
+    """Authorized Users For the Word matcher
     :param str email: email address of user
     "param str password: encrypted password for the user
     """
-    __tablename__ = 'user_model'
 
-    email = db.Column(db.String, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
-    authenticated = db.Column(db.Boolean, default=False)
-    registered_on = db.Column(db.DateTime)
+    active = db.Column(db.Boolean, default=False)
+    confirmed_at = db.Column(db.DateTime())
+    roles = db.relationship('Role',
+                            secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
 
-    def __init__(self, email, password):
-        self.email = email
-        self.password = password
-        self.registered_on = datetime.utcnow()
-
-    def is_active(self):
-        """True, since we are considering all users active"""
-        return True
-
-    def get_id(self):
-        """Return email address to satisfy Flask-Login's requirements."""
+    def __str__(self):
         return self.email
-
-    def is_authenticated(self):
-        """Return True if the user is authenticated."""
-        return self.authenticated
-
-    def is_anonymous(self):
-        """False because we don't want to allow anonymoun users"""
-        return False
-
-
-

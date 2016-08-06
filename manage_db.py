@@ -4,6 +4,10 @@ from flask_migrate import Migrate, MigrateCommand
 
 from matcherAdmin import app, db
 
+"""
+Script to instantiate the tools to run alemic migrations
+"""
+
 app.config.from_object(os.environ['APP_SETTINGS'])
 
 migrate = Migrate(app, db)

@@ -33,6 +33,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
+    name = db.Column(db.String)
     active = db.Column(db.Boolean, default=False)
     confirmed_at = db.Column(db.DateTime())
     roles = db.relationship('Role',

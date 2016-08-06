@@ -343,3 +343,5 @@ paket-files/
 *.sln.iml
 
 *.pyproj
+ptvs_virtualenv_proxy.py
+web.*

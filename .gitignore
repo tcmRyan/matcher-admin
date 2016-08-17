@@ -345,3 +345,7 @@ paket-files/
 *.pyproj
 ptvs_virtualenv_proxy.py
 web.*
+
+# ==== Folder Creation =======
+databases
+uploads

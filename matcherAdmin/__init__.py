@@ -11,10 +11,18 @@ from flask_admin.contrib.sqla import ModelView
 from matcherAdmin.admin_model_views import AdminModelView
 
 
+def ensure_dir(dir):
+    if not os.path.isdir(dir):
+        os.mkdir(dir)
+
+ALLOWED_EXTENSIONS = set(['csv'])
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+ensure_dir(app.config['UPLOAD_FOLDER'])
+ensure_dir(app.config['DB_FOLDER'])
 
 from matcherAdmin.models import User, Role
 # Flask-Admin Section

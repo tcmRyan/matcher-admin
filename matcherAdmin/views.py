@@ -1,11 +1,17 @@
 """
 Routes and views for the flask application.
 """
+import os
 from datetime import datetime
-from flask import render_template
+from flask import render_template, request, redirect, flash, url_for
+from werkzeug.utils import secure_filename
 from flask_security import login_required
-from matcherAdmin import app, user_datastore
+from matcherAdmin import app, ALLOWED_EXTENSIONS
+from matcherAdmin.game_db_gen import load_from_csv
 
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.split('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/')
 @app.route('/home')
@@ -18,22 +24,21 @@ def home():
         year=datetime.now().year,
     )
 
-@app.route('/contact')
-def contact():
-    """Renders the contact page."""
-    return render_template(
-        'contact.html',
-        title='Contact',
-        year=datetime.now().year,
-        message='Your contact page.'
-    )
 
-@app.route('/about')
-def about():
-    """Renders the about page."""
-    return render_template(
-        'about.html',
-        title='About',
-        year=datetime.now().year,
-        message='Your application description page.'
-    )
+@login_required
+@app.route('/upload', methods=['POST'])
+def upload():
+    CSV_FILE = 'word_database'
+    file = request.files.get(CSV_FILE, '')
+    if not file:
+        flash('No file part')
+        return redirect(url_for('home'))    
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(url_for('home'))
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        load_from_csv(filename)
+        flash("Upload Complete")
+    return redirect(url_for('home'))

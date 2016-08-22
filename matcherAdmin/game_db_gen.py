@@ -9,7 +9,7 @@ COL3 = "result"
 TABLE = "combinations"
 
 def connect_db(filename):
-    return sqlite3.connect(os.path.join(app.config['DB_FOLDER'], filename + '.db'))
+    return sqlite3.connect(os.path.join(app.config['DB_FOLDER'], filename))
 
 def load_from_csv(filename, replace=False):
     db_name =  filename.split('.')[0] + '.db'

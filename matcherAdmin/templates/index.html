@@ -16,7 +16,6 @@
   {% endif %}
 {% endwith %}
 <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
-    <label>Name: </label><input type="text" name="starting_words" />
     <label>CSV file: </label><input type="file" name="word_database" />
     <input type="submit" value="Submit"/>
 </form>

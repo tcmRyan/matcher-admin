@@ -13,7 +13,10 @@ from matcherAdmin.admin_model_views import AdminModelView
 
 def ensure_dir(dir):
     if not os.path.isdir(dir):
-        os.mkdir(dir)
+        try:
+            os.mkdir(dir)
+        except OSError:
+            print('Not sure how this happens')
 
 ALLOWED_EXTENSIONS = set(['csv'])
 app = Flask(__name__)

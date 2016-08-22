@@ -18,7 +18,7 @@ def s3_upload(filename):
     S3_BUCKET = os.environ.get('S3_BUCKET')
     s3 = boto3.client('s3')
     db_path = os.path.join(app.config.get('DB_FOLDER'), filename)
-    s3.upload_file(db_path, os.environ.get('S3_BUCKET'), filename)
+    s3.upload_file(db_path, S3_BUCKET, filename)
 
 @app.route('/')
 @app.route('/home')

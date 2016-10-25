@@ -42,3 +42,33 @@ class User(db.Model, UserMixin):
 
     def __str__(self):
         return self.email
+
+class Gamedata(db.Model):
+    """ Table to host all the matches for the word matcher admin.
+    """
+    def __init__(self, base, combination, result, table):
+        self.base = base
+        self.combination = combination
+        self.result = result
+        self.table = table
+
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    table_pk = db.Column(db.Integer, db.ForeignKey('gametables.id'))
+    table = db.relationship('Gametable', backref=db.backref('gamedata', lazy='dynamic'))
+    base = db.Column(db.String)
+    combination = db.Column(db.String)
+    result = db.Column(db.String)
+    __tablename__ = 'gamedata'
+    __table_args__ = (db.UniqueConstraint('base', 'combination', name='_base_combination'),)
+
+class Gametable(db.Model):
+    """
+    Table managing the connections to the tables
+    """
+
+    id = db.Column(db.Integer, primary_key=True,  unique=True)
+    table = db.Column(db.String, nullable=False)
+    author = db.Column(db.String, nullable=False)
+
+    __tablename__ = 'gametables'
+    __table_args__ = (db.UniqueConstraint('table', 'author', name='_author_table'),)

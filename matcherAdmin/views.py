@@ -37,8 +37,6 @@ def home():
 @app.route('/upload', methods=['POST'])
 def upload():
     CSV_FILE = 'word_database'
-    S3_BUCKET = os.environ.get('S3_BUCKET')
-    s3 = boto3.client('s3')
     file = request.files.get(CSV_FILE, '')
     if not file:
         flash('No file part')
@@ -50,6 +48,6 @@ def upload():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         load_from_csv(filename)
-        s3_upload(filename)
+        # s3_upload(filename)
         flash("Upload Complete")
     return redirect(url_for('home'))

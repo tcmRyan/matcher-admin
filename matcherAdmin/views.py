@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 from flask_security import login_required
 from matcherAdmin import app, ALLOWED_EXTENSIONS
 from matcherAdmin.game_db_gen import load_from_csv
+import flask_login
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -47,7 +48,8 @@ def upload():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        load_from_csv(filename)
+        # load_from_csv(filename)
         # s3_upload(filename)
+        upload_to_db(filename, flask_login.current_user)
         flash("Upload Complete")
     return redirect(url_for('home'))

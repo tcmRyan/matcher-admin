@@ -29,8 +29,6 @@ def load_from_csv(filename, replace=False):
                        loaded_dict)
     conn.commit()
 
-
-    
 def upload_to_db(filename, author):
     game_table_name = filename.split('.')[0]
     game_table = Gametable.query.filter_by(author=author, table=game_table_name).first()

@@ -54,7 +54,7 @@ class Gamedata(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
     table_pk = db.Column(db.Integer, db.ForeignKey('gametables.id'))
-    table = db.relationship('Gametable', backref=db.backref('gamedata', lazy='dynamic'))
+    table = db.relationship('Gametable', backref=db.backref('gamedatas', lazy='dynamic'))
     base = db.Column(db.String)
     combination = db.Column(db.String)
     result = db.Column(db.String)

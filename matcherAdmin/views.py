@@ -7,7 +7,7 @@ from flask import render_template, request, redirect, flash, url_for
 from werkzeug.utils import secure_filename
 from flask_security import login_required
 from matcherAdmin import app, ALLOWED_EXTENSIONS
-from matcherAdmin.game_db_gen import load_from_csv
+from matcherAdmin.game_db_gen import load_from_csv, upload_to_db
 import flask_login
 
 def allowed_file(filename):
@@ -50,6 +50,7 @@ def upload():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # load_from_csv(filename)
         # s3_upload(filename)
-        upload_to_db(filename, flask_login.current_user)
+        user = flask_login.current_user
+        upload_to_db(filename, flask_login.current_user.email)
         flash("Upload Complete")
     return redirect(url_for('home'))

@@ -33,14 +33,21 @@ def upload_to_db(filename, author):
     game_table_name = filename.split('.')[0]
     game_table = Gametable.query.filter_by(author=author, table=game_table_name).first()
     if not game_table:
-        game_table = Gametable(game_table_name, author)
+        game_table = Gametable(table=game_table_name, author=author)
+        db.session.add(game_table)
     # Remove all existing data to avoid dealing with upserts
-    game_data = Gamedata.query(table_pk=game_table.pk).delete()
+    db.session.query(Gamedata).filter_by(game_table_id=game_table.id).delete()
+    db.session.commit()
     file = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     with open(file, 'r+') as fin:
         dict_reader = csv.DictReader(fin)
-        for i in dict_reader:
-            new_entry = Gamedata(i[COL1], i[COL2], i[COL3])
+        for row in dict_reader:
+            new_entry = Gamedata(
+                base=row[COL1],
+                combination=row[COL2],
+                result=row[COL3],
+                game_table_id=game_table.id
+            )
             db.session.add(new_entry)
 
     db.session.commit()

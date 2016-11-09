@@ -8,6 +8,7 @@ from flask_security import Security, SQLAlchemyUserDatastore
 from flask_admin import Admin
 from flask_admin import helpers as admin_helpers
 from flask_admin.contrib.sqla import ModelView
+from flask_restful import Api
 from matcherAdmin.admin_model_views import AdminModelView
 
 
@@ -23,6 +24,7 @@ app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+api = Api(app)
 
 ensure_dir(app.config['UPLOAD_FOLDER'])
 ensure_dir(app.config['DB_FOLDER'])
@@ -53,3 +55,4 @@ def security_context_processor():
     )
 
 import matcherAdmin.views
+import matcherAdmin.api

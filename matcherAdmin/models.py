@@ -44,7 +44,8 @@ class User(db.Model, UserMixin):
         return self.email
 
 class Gamedata(db.Model):
-    """ Table to host all the matches for the word matcher admin.
+    """ 
+    Table to host all the matches for the word matcher admin.
     """
     id = db.Column(db.Integer, primary_key=True, unique=True)
     game_table_id = db.Column(db.Integer, db.ForeignKey('gametable.id'))
@@ -54,6 +55,14 @@ class Gamedata(db.Model):
     __tablename__ = 'gamedata'
     __table_args__ = (db.UniqueConstraint('base', 'combination', name='_base_combination'),)
 
+    def to_json(self):
+        return {
+            'base': self.base,
+            'combination': self.combination,
+            'result': self.result
+        }
+
+
 class Gametable(db.Model):
     """
     Table managing the connections to the tables
@@ -62,6 +71,7 @@ class Gametable(db.Model):
     id = db.Column(db.Integer, primary_key=True,  unique=True)
     table = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
+    description = db.Column(db.LargeBinary) 
     data = db.relationship('Gamedata', backref='gametable', cascade='all, delete-orphan', lazy='dynamic')
 
     __tablename__ = 'gametable'

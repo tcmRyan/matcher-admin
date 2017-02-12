@@ -24,6 +24,7 @@ class Data(Resource):
 
     @marshal_with(game_data_fields)
     def get(self, table_id):
+        print(game_data_fields)
         table = Gametable.query.get(table_id)
         return table.data
         

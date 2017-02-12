@@ -25,7 +25,7 @@ class Data(Resource):
     @marshal_with(game_data_fields)
     def get(self, table_id):
         table = Gametable.query.get(table_id)
-        return {'data': table.data}
+        return table.data
         
 class Table(Resource):
 
@@ -35,7 +35,7 @@ class Table(Resource):
         if author:
             return Gametable.query.filter(author=author).all()
         else:
-            return {'data': Gametable.query.all()}
+            return Gametable.query.all()
 
 api.add_resource(Data, '/gamedata/<table_id>')
 api.add_resource(Table, '/gametables')

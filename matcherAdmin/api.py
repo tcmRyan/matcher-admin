@@ -15,7 +15,7 @@ game_row_fields = {
     'result': fields.String,
 }
 
-game_data_fields = {fields.List(fields.Nested(game_row_fields))}
+game_data_fields = {'data': fields.List(fields.Nested(game_row_fields))}
 
 parser = reqparse.RequestParser()
 parser.add_argument('author', type=str, help='Creator of this game')
@@ -24,9 +24,8 @@ class Data(Resource):
 
     @marshal_with(game_data_fields)
     def get(self, table_id):
-        print(game_data_fields)
         table = Gametable.query.get(table_id)
-        return table.data
+        return {'data': table.data}
         
 class Table(Resource):
 

@@ -10,7 +10,7 @@ game_table_fields = {
 }
 
 game_row_fields = {
-    'wordBase': fields.String,
+    'wordbase': fields.String,
     'combination': fields.String,
     'result': fields.String,
 }

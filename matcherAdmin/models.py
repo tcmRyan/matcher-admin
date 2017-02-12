@@ -49,7 +49,7 @@ class Gamedata(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True, unique=True)
     game_table_id = db.Column(db.Integer, db.ForeignKey('gametable.id'))
-    wordBase = db.Column(db.String)
+    wordbase = db.Column(db.String)
     combination = db.Column(db.String)
     result = db.Column(db.String)
     __tablename__ = 'gamedata'
@@ -57,9 +57,9 @@ class Gamedata(db.Model):
 
     def to_json(self):
         return {
-            'wordBase': self.base,
+            'wordbase': self.wordbase,
             'combination': self.combination,
-            'result': self.result
+            'result': self.resultcha
         }
 
 

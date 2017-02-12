@@ -14,7 +14,7 @@ roles_users = db.Table('roles_users',
 
 class Role(db.Model, RoleMixin):
     """
-    Roles for authorization
+    Roles for authorization.
     """
     id = db.Column(db.Integer(), primary_key=True, unique=True)
     name = db.Column(db.String(80), unique=True)
@@ -71,7 +71,8 @@ class Gametable(db.Model):
     id = db.Column(db.Integer, primary_key=True,  unique=True)
     table = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
-    description = db.Column(db.LargeBinary) 
+    description = db.Column(db.LargeBinary)
+    seed = db.Column(db.String, nullable=False) 
     data = db.relationship('Gamedata', backref='gametable', cascade='all, delete-orphan', lazy='dynamic')
 
     __tablename__ = 'gametable'

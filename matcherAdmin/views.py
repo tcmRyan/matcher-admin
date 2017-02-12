@@ -51,6 +51,6 @@ def upload():
         # load_from_csv(filename)
         # s3_upload(filename)
         user = flask_login.current_user
-        upload_to_db(filename, flask_login.current_user.email)
+        upload_to_db(filename, flask_login.current_user.email, request.form['seed'])
         flash("Upload Complete")
     return redirect(url_for('home'))

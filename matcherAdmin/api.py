@@ -5,7 +5,8 @@ from matcherAdmin.models import User, Gamedata, Gametable
 game_table_fields = {
     'id': fields.Integer,
     'author': fields.String,
-    'table': fields.String
+    'table': fields.String,
+    'seed': fields.String
 }
 
 game_row_fields = {
@@ -34,7 +35,7 @@ class Table(Resource):
         if author:
             return Gametable.query.filter(author=author).all()
         else:
-            return Gametable.query.all()
+            return {'data': Gametable.query.all()}
 
 api.add_resource(Data, '/gamedata/<table_id>')
 api.add_resource(Table, '/gametables')

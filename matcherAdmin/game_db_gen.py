@@ -29,11 +29,11 @@ def load_from_csv(filename, replace=False):
                        loaded_dict)
     conn.commit()
 
-def upload_to_db(filename, author):
+def upload_to_db(filename, author, seed):
     game_table_name = filename.split('.')[0]
     game_table = Gametable.query.filter_by(author=author, table=game_table_name).first()
     if not game_table:
-        game_table = Gametable(table=game_table_name, author=author)
+        game_table = Gametable(table=game_table_name, author=author, seed=seed)
         db.session.add(game_table)
     # Remove all existing data to avoid dealing with upserts
     db.session.query(Gamedata).filter_by(game_table_id=game_table.id).delete()

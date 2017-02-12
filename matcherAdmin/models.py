@@ -72,7 +72,7 @@ class Gametable(db.Model):
     table = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
     description = db.Column(db.LargeBinary)
-    seed = db.Column(db.String, nullable=False) 
+    seed = db.Column(db.String) 
     data = db.relationship('Gamedata', backref='gametable', cascade='all, delete-orphan', lazy='dynamic')
 
     __tablename__ = 'gametable'

@@ -43,7 +43,7 @@ def upload_to_db(filename, author, seed):
         dict_reader = csv.DictReader(fin)
         for row in dict_reader:
             new_entry = Gamedata(
-                wordBase=row[COL1],
+                wordbase=row[COL1],
                 combination=row[COL2],
                 result=row[COL3],
                 game_table_id=game_table.id

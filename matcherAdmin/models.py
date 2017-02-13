@@ -59,7 +59,7 @@ class Gamedata(db.Model):
         return {
             'wordbase': self.wordbase,
             'combination': self.combination,
-            'result': self.resultcha
+            'result': self.result
         }
 
 

@@ -4,7 +4,7 @@ import csv
 from matcherAdmin import app, db
 from matcherAdmin.models import Gamedata, Gametable
 
-COL1 = "base"
+COL1 = "wordbase"
 COL2 = "combination"
 COL3 = "result"
 TABLE = "combinations"

@@ -53,7 +53,7 @@ class Gamedata(db.Model):
     combination = db.Column(db.String)
     result = db.Column(db.String)
     __tablename__ = 'gamedata'
-    __table_args__ = (db.UniqueConstraint('base', 'combination', name='_base_combination'),)
+    __table_args__ = (db.UniqueConstraint('wordbase', 'combination', name='_base_combination'),)
 
     def to_json(self):
         return {
